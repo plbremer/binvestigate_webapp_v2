@@ -575,7 +575,7 @@ def callback_comopund(
         pprint(cytoscape_compound_tapnodedata),
         pprint(checklist_compound_value),
         pprint(dropdown_compound_value),
-        pprint(store_compound_modified_timestamp),
+        #pprint(store_compound_modified_timestamp),
         pprint(cytoscape_compound_elements),
         pprint(store_compound_data)
 
