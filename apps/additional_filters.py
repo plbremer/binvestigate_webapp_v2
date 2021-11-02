@@ -1,4 +1,3 @@
-
 from dash import html
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
@@ -93,7 +92,7 @@ layout=html.Div(
     
     [State(component_id='store_additional',component_property='data')]
 )
-def callback_comopund(
+def callback_additional(
     slider_additional_value,
     toggleswitch_additional_value,
     #temp_modified_timestamp,

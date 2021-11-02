@@ -170,7 +170,7 @@ layout=html.Div(
     [State(component_id='cytoscape_compound',component_property='elements'),
     State(component_id='store_compound',component_property='data')]
 )
-def callback_comopund(
+def callback_aggregate(
     cytoscape_compound_tapnodedata,
     checklist_compound_value,
     dropdown_compound_value,

@@ -11,6 +11,7 @@ from app import app
 from apps import cyto_compound
 from apps import backend_dataset
 from apps import additional_filters
+from apps import aggregate_criteria
 
 
 
@@ -20,7 +21,7 @@ app.layout = html.Div(
         dcc.Store(id='store_compound'),
         dcc.Store(id='store_additional'),
 
-        dcc.Store(id='aggregate'),
+        dcc.Store(id='store_aggregate'),
         
         dbc.Row(
             #for the moment, we put all in one column
