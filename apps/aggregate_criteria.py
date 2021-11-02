@@ -195,6 +195,7 @@ def callback_compound(
 
     #therefore, we load from store if the callback context length is >1 and the store is not none
 
+    print('---------------------')
     print(callback_context.triggered)
     print(button_aggregate_n_clicks)
     print(slider_aggregate_value)
