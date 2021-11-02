@@ -158,6 +158,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             html.Button(
+                                'Reset selections',
                                 id='Button_compound',
                             )
                         ],
