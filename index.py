@@ -12,6 +12,7 @@ from apps import cyto_compound
 from apps import backend_dataset
 from apps import additional_filters
 from apps import aggregate_criteria
+from apps import from_metadata
 
 
 
@@ -20,6 +21,10 @@ app.layout = html.Div(
         #storage_type='session',
         dcc.Store(id='store_compound'),
         dcc.Store(id='store_additional'),
+
+        dcc.Store(id='store_from_species'),
+        dcc.Store(id='store_from_organ'),
+        dcc.Store(id='store_from_disease'),
 
         dcc.Store(id='store_aggregate'),
         
@@ -34,7 +39,8 @@ app.layout = html.Div(
                         dcc.Link('Compounds',href='/apps/cyto_compound'),
                         dcc.Link('Backend Dataset',href='/apps/backend_dataset'),
                         dcc.Link('Additional Filters',href='/apps/additional_filters'),
-                        dcc.Link('Aggregate Criteria',href='/apps/aggregate_criteria')
+                        dcc.Link('Aggregate Criteria',href='/apps/aggregate_criteria'),
+                        dcc.Link('From Metadata',href='/apps/from_metadata')
                     ]
                 ),
 
@@ -64,6 +70,8 @@ def display_page(temp_pathname):
         return [additional_filters.layout]
     elif temp_pathname == '/apps/aggregate_criteria':
         return [aggregate_criteria.layout]
+    elif temp_pathname == '/apps/from_metadata':
+        return [from_metadata.layout]
 
     else:
         return 'under construction'

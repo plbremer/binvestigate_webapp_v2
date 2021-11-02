@@ -1,4 +1,3 @@
-
 import dash_bootstrap_components as dbc
 from dash import html
 import dash_cytoscape as cyto
@@ -96,8 +95,7 @@ layout=html.Div(
                             dcc.Checklist(
                                 id='checklist_compound',
                                 options=[
-                                    {'label': 'both glucoses', 'value': 'both_glucoses'},
-                                    {'label': 'alanine', 'value': 'alanine'}
+                                    {'label': i, 'value': i} for i in checklist_hashmap.keys()
                                 ]
                             )
                         ],
@@ -167,9 +165,6 @@ def callback_aggregate(
     cytoscape_compound_elements,
     store_compound_data
 ):
-    print('---------------------------------')
-    print(callback_context.triggered)
-    print(checklist_compound_value)
 
     if (len(callback_context.triggered)>1) and (store_compound_data is None):
 
@@ -182,12 +177,6 @@ def callback_aggregate(
         #Cannot read properties of null (reading 'indexOf')
         #https://stackoverflow.com/questions/62183202/cannot-read-properly-data-of-null-dash
         checklist_compound_value=list()
-
-        print('dghj')
-        print(checklist_compound_value)
-        print(dropdown_compound_value)
-        print(store_compound_data)
-        #print()
 
         return cytoscape_compound_elements, checklist_compound_value, dropdown_compound_value,store_compound_data
 

@@ -113,36 +113,6 @@ layout=html.Div(
             )
         ),
 
-
-
-        # dbc.Row(
-        #     dbc.Col(
-        #         html.Div(
-        #             children=[
-        #                 #a header
-        #                 html.H3('Don\'t Include Presence/Absence ----- Include Presence/Absence')
-        #             ]
-        #         ),
-        #         width='auto',
-        #         #align='center'
-        #     ),
-        #     justify='center'
-        # ),
-        # #further slicing tools - include np.inf toggle
-        # dbc.Row(
-        #     dbc.Col(
-        #         html.Div(
-        #             children=[
-        #                 #a header
-        #                 daq.ToggleSwitch(
-        #                     id='toggleswitch_additional',
-        #                     #label='include np.inf?',
-        #                     value=True
-        #                 )
-        #             ]
-        #         )
-        #     )
-        # )
     ]
 )
 
@@ -173,6 +143,11 @@ def check_for_errors(a,b):
     
     [State(component_id='store_compound',component_property='data'),
     State(component_id='store_additional',component_property='data'),
+
+    State(component_id='store_from_species',component_property='data'),
+    State(component_id='store_from_organ',component_property='data'),
+    State(component_id='store_from_disease',component_property='data'),
+
     State(component_id='store_aggregate',component_property='data'),
     State(component_id='spinners_aggregate',component_property='children')]
 )
@@ -182,8 +157,12 @@ def callback_compound(
 
 
     store_compound_data,
-    #temp_modified_timestamp,
     store_additional_data,
+
+    store_from_species_data,
+    store_from_organ_data,
+    store_from_disease_data,
+    
     store_aggregate_data,
     spinners_aggregate_children
 
@@ -217,6 +196,13 @@ def callback_compound(
 
         store_aggregate_data={
             'compounds':[],
+            
+            'from_species':[],
+            'from_disease':[],
+            'from_organ':[],
+
+            
+            
             'additional_slider':[],
             'additional_toggleswitch':[],
             'aggregate_on_page_rangeslider':None,
@@ -257,6 +243,12 @@ def callback_compound(
         
         
         store_aggregate_data['compounds'].append(store_compound_data['compounds'])
+        
+        store_aggregate_data['from_species'].append(store_from_species_data['species'])
+        store_aggregate_data['from_disease'].append(store_from_disease_data['disease'])
+        store_aggregate_data['from_organ'].append(store_from_organ_data['organ'])
+        
+        
         store_aggregate_data['additional_slider'].append(store_additional_data['slider_additional'])
         store_aggregate_data['additional_toggleswitch'].append(store_additional_data['toggleswitch_additional'])
         store_aggregate_data['aggregate_on_page_spinners']+=1
