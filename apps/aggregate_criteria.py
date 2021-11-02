@@ -148,6 +148,10 @@ def check_for_errors(a,b):
     State(component_id='store_from_organ',component_property='data'),
     State(component_id='store_from_disease',component_property='data'),
 
+    State(component_id='store_to_species',component_property='data'),
+    State(component_id='store_to_organ',component_property='data'),
+    State(component_id='store_to_disease',component_property='data'),
+
     State(component_id='store_aggregate',component_property='data'),
     State(component_id='spinners_aggregate',component_property='children')]
 )
@@ -162,6 +166,10 @@ def callback_compound(
     store_from_species_data,
     store_from_organ_data,
     store_from_disease_data,
+    
+    store_to_species_data,
+    store_to_organ_data,
+    store_to_disease_data,
     
     store_aggregate_data,
     spinners_aggregate_children
@@ -201,6 +209,9 @@ def callback_compound(
             'from_disease':[],
             'from_organ':[],
 
+            'to_species':[],
+            'to_disease':[],
+            'to_organ':[],
             
             
             'additional_slider':[],
@@ -247,6 +258,10 @@ def callback_compound(
         store_aggregate_data['from_species'].append(store_from_species_data['species'])
         store_aggregate_data['from_disease'].append(store_from_disease_data['disease'])
         store_aggregate_data['from_organ'].append(store_from_organ_data['organ'])
+
+        store_aggregate_data['to_species'].append(store_to_species_data['species'])
+        store_aggregate_data['to_disease'].append(store_to_disease_data['disease'])
+        store_aggregate_data['to_organ'].append(store_to_organ_data['organ'])
         
         
         store_aggregate_data['additional_slider'].append(store_additional_data['slider_additional'])
