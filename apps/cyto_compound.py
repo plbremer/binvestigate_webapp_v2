@@ -152,6 +152,23 @@ layout=html.Div(
                 ),
             ]
         ),
+        html.Div(    
+            children=[
+                dbc.Row(
+                    dbc.Col(
+                        children=[
+                            html.Button(
+                                id='Button_compound',
+                            )
+                        ],
+                        #width='auto',
+                        #align='center'
+                    )
+                ),
+            ]
+        ),
+
+    
     ]
 )
 
