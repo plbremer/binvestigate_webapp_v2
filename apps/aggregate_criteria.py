@@ -195,7 +195,7 @@ def callback_compound(
 
     #therefore, we load from store if the callback context length is >1 and the store is not none
 
-    print('---------------------')
+    print('@@@@@@@@@@@@@@@@@@@@')
     print(callback_context.triggered)
     print(button_aggregate_n_clicks)
     print(slider_aggregate_value)
@@ -219,7 +219,8 @@ def callback_compound(
             'compounds':[],
             'additional_slider':[],
             'additional_toggleswitch':[],
-            'aggregate_on_page_rangeslider':None
+            'aggregate_on_page_rangeslider':None,
+            'aggregate_on_page_spinners':0
         }
 
 
@@ -232,6 +233,16 @@ def callback_compound(
         
         #restore the "post aggregate stuff" otherwise do nothing?
         slider_aggregate_value=store_aggregate_data['aggregate_on_page_rangeslider']
+
+
+        #if store_aggregate_data['aggregate_on_page_spinners'] >0:
+        for i in range(store_aggregate_data['aggregate_on_page_spinners']):
+            spinners_aggregate_children.append(
+                dbc.Spinner(
+                    color='primary',
+                    type='grow'
+                )
+            )            
 
         return store_aggregate_data, slider_aggregate_value,spinners_aggregate_children
 
@@ -248,7 +259,7 @@ def callback_compound(
         store_aggregate_data['compounds'].append(store_compound_data['compounds'])
         store_aggregate_data['additional_slider'].append(store_additional_data['slider_additional'])
         store_aggregate_data['additional_toggleswitch'].append(store_additional_data['toggleswitch_additional'])
-                
+        store_aggregate_data['aggregate_on_page_spinners']+=1
 
         spinners_aggregate_children.append(
             dbc.Spinner(
