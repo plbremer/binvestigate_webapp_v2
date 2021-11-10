@@ -40,7 +40,8 @@ for temp_element in compound_network_dict['elements']['nodes']:
 #defines the map between the various boxes and the node ids
 checklist_hashmap={
     'both_glucoses': ['5','22'],
-    'alanine':['2']
+    'alanine':['2'],
+    'all basic bins':['2', '3', '4', '5', '6', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '23']
 }
 
 basic_stylesheet=[

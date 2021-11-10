@@ -74,7 +74,7 @@ for temp_element in disease_network_dict['elements']['nodes']:
 
 #defines the map between the various boxes and the node ids
 checklist_hashmap_species={
-    'primed apes': ['9606','10090','314146'],
+    'primed apes': ['9606','9544','314146'],
     'some plant':['3701','72658']
 }
 

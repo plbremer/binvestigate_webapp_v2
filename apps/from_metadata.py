@@ -74,7 +74,7 @@ for temp_element in disease_network_dict['elements']['nodes']:
 
 #defines the map between the various boxes and the node ids
 checklist_hashmap_species={
-    'primed apes': ['9606','10090','314146'],
+    'primed apes': ['9606','9544','314146'],
     'some plant':['3701','72658']
 }
 
@@ -127,10 +127,10 @@ networkx_disease=nx.readwrite.gpickle.read_gpickle(networkx_address_disease)
 layout=html.Div(
     children=[
         html.Div(
-            id='div_cytoscape_species_cyto',
+            id='div_cytoscape_from_species_cyto',
             children=[
                 cyto.Cytoscape(
-                    id='cytoscape_species',
+                    id='cytoscape_from_species',
                     layout={'name':'dagre'},
                     elements=species_network_dict['elements'],
                     minZoom=0.3,
@@ -145,7 +145,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Checklist(
-                                id='checklist_species',
+                                id='checklist_from_species',
                                 options=[
                                     {'label': i, 'value': i} for i in checklist_hashmap_species.keys()
                                 ]
@@ -163,7 +163,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Dropdown(
-                                id='dropdown_species',
+                                id='dropdown_from_species',
                                 options=[
                                     {'label': temp_node['data']['label'], 'value': temp_node['data']['id']} for temp_node in species_network_dict['elements']['nodes']
                                 ],
@@ -181,7 +181,7 @@ layout=html.Div(
                         children=[
                             html.Button(
                                 'Reset selections',
-                                id='button_species',
+                                id='button_from_species',
                             )
                         ],
                     )
@@ -190,10 +190,10 @@ layout=html.Div(
         ),
 
         html.Div(
-            id='div_cytoscape_organ_cyto',
+            id='div_cytoscape_from_organ_cyto',
             children=[
                 cyto.Cytoscape(
-                    id='cytoscape_organ',
+                    id='cytoscape_from_organ',
                     layout={'name':'dagre'},
                     elements=organ_network_dict['elements'],
                     minZoom=0.3,
@@ -208,7 +208,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Checklist(
-                                id='checklist_organ',
+                                id='checklist_from_organ',
                                 options=[
                                     {'label': i, 'value': i} for i in checklist_hashmap_organ.keys()
                                 ]
@@ -226,7 +226,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Dropdown(
-                                id='dropdown_organ',
+                                id='dropdown_from_organ',
                                 options=[
                                     {'label': temp_node['data']['label'], 'value': temp_node['data']['id']} for temp_node in organ_network_dict['elements']['nodes']
                                 ],
@@ -244,7 +244,7 @@ layout=html.Div(
                         children=[
                             html.Button(
                                 'Reset selections',
-                                id='button_organ',
+                                id='button_from_organ',
                             )
                         ],
                     )
@@ -253,10 +253,10 @@ layout=html.Div(
         ),
 
         html.Div(
-            id='div_cytoscape_disease_cyto',
+            id='div_cytoscape_from_disease_cyto',
             children=[
                 cyto.Cytoscape(
-                    id='cytoscape_disease',
+                    id='cytoscape_from_disease',
                     layout={'name':'dagre'},
                     elements=disease_network_dict['elements'],
                     minZoom=0.3,
@@ -271,7 +271,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Checklist(
-                                id='checklist_disease',
+                                id='checklist_from_disease',
                                 options=[
                                     {'label': i, 'value': i} for i in checklist_hashmap_disease.keys()
                                 ]
@@ -289,7 +289,7 @@ layout=html.Div(
                     dbc.Col(
                         children=[
                             dcc.Dropdown(
-                                id='dropdown_disease',
+                                id='dropdown_from_disease',
                                 options=[
                                     {'label': temp_node['data']['label'], 'value': temp_node['data']['id']} for temp_node in disease_network_dict['elements']['nodes']
                                 ],
@@ -307,7 +307,7 @@ layout=html.Div(
                         children=[
                             html.Button(
                                 'Reset selections',
-                                id='button_disease',
+                                id='button_from_disease',
                             )
                         ],
                     )
@@ -320,26 +320,26 @@ layout=html.Div(
 
 
 @app.callback(
-    [Output(component_id='cytoscape_species',component_property='elements'),
-    Output(component_id='checklist_species',component_property='value'),
-    Output(component_id='dropdown_species',component_property='value'),
+    [Output(component_id='cytoscape_from_species',component_property='elements'),
+    Output(component_id='checklist_from_species',component_property='value'),
+    Output(component_id='dropdown_from_species',component_property='value'),
     Output(component_id='store_from_species',component_property='data')],
     
-    [Input(component_id='cytoscape_species',component_property='tapNodeData'),
-    Input(component_id='checklist_species',component_property='value'),
-    Input(component_id='dropdown_species',component_property='value'),
-    Input(component_id='button_species',component_property='n_clicks')],
+    [Input(component_id='cytoscape_from_species',component_property='tapNodeData'),
+    Input(component_id='checklist_from_species',component_property='value'),
+    Input(component_id='dropdown_from_species',component_property='value'),
+    Input(component_id='button_from_species',component_property='n_clicks')],
     
-    [State(component_id='cytoscape_species',component_property='elements'),
+    [State(component_id='cytoscape_from_species',component_property='elements'),
     State(component_id='store_from_species',component_property='data')]
 )
 def callback_aggregate(
-    cytoscape_species_tapnodedata,
-    checklist_species_value,
-    dropdown_species_value,
-    button_species_value,
+    cytoscape_from_species_tapnodedata,
+    checklist_from_species_value,
+    dropdown_from_species_value,
+    button_from_species_value,
 
-    cytoscape_species_elements,
+    cytoscape_from_species_elements,
     store_from_species_data
 ):
 
@@ -353,37 +353,37 @@ def callback_aggregate(
         #without this we get 
         #Cannot read properties of null (reading 'indexOf')
         #https://stackoverflow.com/questions/62183202/cannot-read-properly-data-of-null-dash
-        checklist_species_value=list()
+        checklist_from_species_value=list()
 
-        return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+        return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
     elif (len(callback_context.triggered)>1) and (store_from_species_data is not None):
-        cytoscape_species_elements, 
-        for temp_node in cytoscape_species_elements['nodes']:
+        cytoscape_from_species_elements, 
+        for temp_node in cytoscape_from_species_elements['nodes']:
             if temp_node['data']['id'] in store_from_species_data['species']:
                 temp_node['classes']='selected'
             else:
                 temp_node['classes']='not_selected'
                       
-        dropdown_species_value=store_from_species_data['species']
+        dropdown_from_species_value=store_from_species_data['species']
 
-        checklist_species_value=store_from_species_data['checkboxes']
+        checklist_from_species_value=store_from_species_data['checkboxes']
 
         #dont do anthing to store_from_species_data
 
-        return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+        return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_species.tapNodeData'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_from_species.tapNodeData'):
         
         #elements
         try:
-            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_species,cytoscape_species_tapnodedata['id'])
+            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_species,cytoscape_from_species_tapnodedata['id'])
         except nx.NetworkXError:
             child_nodes_and_self=set()
-        child_nodes_and_self.add(cytoscape_species_tapnodedata['id'])
+        child_nodes_and_self.add(cytoscape_from_species_tapnodedata['id'])
         child_nodes_and_self=set(map(str,child_nodes_and_self))
         
-        for temp_node in cytoscape_species_elements['nodes']:
+        for temp_node in cytoscape_from_species_elements['nodes']:
             if temp_node['data']['id'] in child_nodes_and_self:
                 if temp_node['classes']=='selected':
                     temp_node['classes']='not_selected'
@@ -392,13 +392,13 @@ def callback_aggregate(
 
         #store species
         new_species_list=list()
-        for temp_node in cytoscape_species_elements['nodes']:
+        for temp_node in cytoscape_from_species_elements['nodes']:
             if temp_node['classes']=='selected':
                 new_species_list.append(temp_node['data']['id'])        
         store_from_species_data['species']=new_species_list
 
         #dropdown
-        dropdown_species_value=store_from_species_data['species']
+        dropdown_from_species_value=store_from_species_data['species']
 
         #checkbox
         new_checkbox_values=list()
@@ -406,21 +406,21 @@ def callback_aggregate(
             #if every node id is in the store
             if all([(i in store_from_species_data['species']) for i in checklist_hashmap_species[temp_checkbox]]):
                 new_checkbox_values.append(temp_checkbox)
-        checklist_species_value=new_checkbox_values
+        checklist_from_species_value=new_checkbox_values
 
         #store checkboxes        
-        store_from_species_data['checkboxes']=checklist_species_value
+        store_from_species_data['checkboxes']=checklist_from_species_value
 
-        return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+        return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_species.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_from_species.value'):
 
-        if (len(store_from_species_data['checkboxes']) < len(checklist_species_value)):
+        if (len(store_from_species_data['checkboxes']) < len(checklist_from_species_value)):
 
-            box_we_clicked=list(set(checklist_species_value).difference(set(store_from_species_data['checkboxes'])))[0]
+            box_we_clicked=list(set(checklist_from_species_value).difference(set(store_from_species_data['checkboxes'])))[0]
 
             #elements
-            for temp_node in cytoscape_species_elements['nodes']:
+            for temp_node in cytoscape_from_species_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_species[box_we_clicked]:
                     temp_node['classes']='selected'  
 
@@ -429,16 +429,16 @@ def callback_aggregate(
             store_from_species_data['species']=list(set(store_from_species_data['species']).union(set(checklist_hashmap_species[box_we_clicked])))
 
             #dropdown
-            dropdown_species_value=store_from_species_data['species']
+            dropdown_from_species_value=store_from_species_data['species']
             
-            return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+            return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
            
-        elif len(store_from_species_data['checkboxes']) > len(checklist_species_value):
+        elif len(store_from_species_data['checkboxes']) > len(checklist_from_species_value):
 
-            box_we_unclicked=list(set(store_from_species_data['checkboxes']).difference(set(checklist_species_value)))[0]
+            box_we_unclicked=list(set(store_from_species_data['checkboxes']).difference(set(checklist_from_species_value)))[0]
 
             #elements
-            for temp_node in cytoscape_species_elements['nodes']:
+            for temp_node in cytoscape_from_species_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_species[box_we_unclicked]:
                     temp_node['classes']='not_selected' 
 
@@ -447,18 +447,18 @@ def callback_aggregate(
             store_from_species_data['species']=list(set(store_from_species_data['species']).difference(set(checklist_hashmap_species[box_we_unclicked])))
 
             #dropdown
-            dropdown_species_value=store_from_species_data['species']
+            dropdown_from_species_value=store_from_species_data['species']
 
-            return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+            return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_species.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_from_species.value'):
 
-        if len(store_from_species_data['species']) < len(dropdown_species_value):
+        if len(store_from_species_data['species']) < len(dropdown_from_species_value):
 
-            species_we_added=list(set(dropdown_species_value).difference(set(store_from_species_data['species'])))[0]
+            species_we_added=list(set(dropdown_from_species_value).difference(set(store_from_species_data['species'])))[0]
 
             #elements
-            for temp_node in cytoscape_species_elements['nodes']:
+            for temp_node in cytoscape_from_species_elements['nodes']:
                 if temp_node['data']['id'] == species_we_added:
                     temp_node['classes']='selected'  
                     break
@@ -479,18 +479,18 @@ def callback_aggregate(
                 #if the set of species implied by temp_checkbox is in the store/elements
                 #then add the chceklist to the store/add the value to the checklist values
                 #we can check is the set of species is there by doing a difference and if the difference length is zero
-                if len(set(checklist_hashmap_species[temp_checkbox]).difference(set(dropdown_species_value)))==0:
+                if len(set(checklist_hashmap_species[temp_checkbox]).difference(set(dropdown_from_species_value)))==0:
                     store_from_species_data['checkboxes'].append(temp_checkbox)
-                    checklist_species_value.append(temp_checkbox)
+                    checklist_from_species_value.append(temp_checkbox)
 
-            return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+            return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
-        elif len(store_from_species_data['species']) > len(dropdown_species_value):
+        elif len(store_from_species_data['species']) > len(dropdown_from_species_value):
 
-            species_we_lost=list(set(store_from_species_data['species']).difference(set(dropdown_species_value)))[0]
+            species_we_lost=list(set(store_from_species_data['species']).difference(set(dropdown_from_species_value)))[0]
 
             #elements
-            for temp_node in cytoscape_species_elements['nodes']:
+            for temp_node in cytoscape_from_species_elements['nodes']:
                 if temp_node['data']['id'] == species_we_lost:
                     temp_node['classes']='not_selected'  
                     break
@@ -516,52 +516,52 @@ def callback_aggregate(
                 except ValueError:
                     continue
                 try:
-                    checklist_species_value.remove(temp_checkbox)
+                    checklist_from_species_value.remove(temp_checkbox)
                 except ValueError:
                     continue
 
-            return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+            return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_species.n_clicks'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_from_species.n_clicks'):
 
         store_from_species_data={
             'species':[],
             'checkboxes':[]
         }
 
-        for temp_node in cytoscape_species_elements['nodes']:
+        for temp_node in cytoscape_from_species_elements['nodes']:
             temp_node['classes']='not_selected'  
 
-        checklist_species_value=list()
+        checklist_from_species_value=list()
 
-        dropdown_species_value=None
+        dropdown_from_species_value=None
 
-        return cytoscape_species_elements, checklist_species_value, dropdown_species_value,store_from_species_data
+        return cytoscape_from_species_elements, checklist_from_species_value, dropdown_from_species_value,store_from_species_data
 
 
 
 
 @app.callback(
-    [Output(component_id='cytoscape_organ',component_property='elements'),
-    Output(component_id='checklist_organ',component_property='value'),
-    Output(component_id='dropdown_organ',component_property='value'),
+    [Output(component_id='cytoscape_from_organ',component_property='elements'),
+    Output(component_id='checklist_from_organ',component_property='value'),
+    Output(component_id='dropdown_from_organ',component_property='value'),
     Output(component_id='store_from_organ',component_property='data')],
     
-    [Input(component_id='cytoscape_organ',component_property='tapNodeData'),
-    Input(component_id='checklist_organ',component_property='value'),
-    Input(component_id='dropdown_organ',component_property='value'),
-    Input(component_id='button_organ',component_property='n_clicks')],
+    [Input(component_id='cytoscape_from_organ',component_property='tapNodeData'),
+    Input(component_id='checklist_from_organ',component_property='value'),
+    Input(component_id='dropdown_from_organ',component_property='value'),
+    Input(component_id='button_from_organ',component_property='n_clicks')],
     
-    [State(component_id='cytoscape_organ',component_property='elements'),
+    [State(component_id='cytoscape_from_organ',component_property='elements'),
     State(component_id='store_from_organ',component_property='data')]
 )
 def callback_aggregate(
-    cytoscape_organ_tapnodedata,
-    checklist_organ_value,
-    dropdown_organ_value,
-    button_organ_value,
+    cytoscape_from_organ_tapnodedata,
+    checklist_from_organ_value,
+    dropdown_from_organ_value,
+    button_from_organ_value,
 
-    cytoscape_organ_elements,
+    cytoscape_from_organ_elements,
     store_from_organ_data
 ):
 
@@ -575,37 +575,37 @@ def callback_aggregate(
         #without this we get 
         #Cannot read properties of null (reading 'indexOf')
         #https://stackoverflow.com/questions/62183202/cannot-read-properly-data-of-null-dash
-        checklist_organ_value=list()
+        checklist_from_organ_value=list()
 
-        return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+        return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
     elif (len(callback_context.triggered)>1) and (store_from_organ_data is not None):
-        cytoscape_organ_elements, 
-        for temp_node in cytoscape_organ_elements['nodes']:
+        cytoscape_from_organ_elements, 
+        for temp_node in cytoscape_from_organ_elements['nodes']:
             if temp_node['data']['id'] in store_from_organ_data['organ']:
                 temp_node['classes']='selected'
             else:
                 temp_node['classes']='not_selected'
                       
-        dropdown_organ_value=store_from_organ_data['organ']
+        dropdown_from_organ_value=store_from_organ_data['organ']
 
-        checklist_organ_value=store_from_organ_data['checkboxes']
+        checklist_from_organ_value=store_from_organ_data['checkboxes']
 
         #dont do anthing to store_from_organ_data
 
-        return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+        return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_organ.tapNodeData'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_from_organ.tapNodeData'):
         
         #elements
         try:
-            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_organ,cytoscape_organ_tapnodedata['id'])
+            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_organ,cytoscape_from_organ_tapnodedata['id'])
         except nx.NetworkXError:
             child_nodes_and_self=set()
-        child_nodes_and_self.add(cytoscape_organ_tapnodedata['id'])
+        child_nodes_and_self.add(cytoscape_from_organ_tapnodedata['id'])
         child_nodes_and_self=set(map(str,child_nodes_and_self))
         
-        for temp_node in cytoscape_organ_elements['nodes']:
+        for temp_node in cytoscape_from_organ_elements['nodes']:
             if temp_node['data']['id'] in child_nodes_and_self:
                 if temp_node['classes']=='selected':
                     temp_node['classes']='not_selected'
@@ -614,13 +614,13 @@ def callback_aggregate(
 
         #store organ
         new_organ_list=list()
-        for temp_node in cytoscape_organ_elements['nodes']:
+        for temp_node in cytoscape_from_organ_elements['nodes']:
             if temp_node['classes']=='selected':
                 new_organ_list.append(temp_node['data']['id'])        
         store_from_organ_data['organ']=new_organ_list
 
         #dropdown
-        dropdown_organ_value=store_from_organ_data['organ']
+        dropdown_from_organ_value=store_from_organ_data['organ']
 
         #checkbox
         new_checkbox_values=list()
@@ -628,21 +628,21 @@ def callback_aggregate(
             #if every node id is in the store
             if all([(i in store_from_organ_data['organ']) for i in checklist_hashmap_organ[temp_checkbox]]):
                 new_checkbox_values.append(temp_checkbox)
-        checklist_organ_value=new_checkbox_values
+        checklist_from_organ_value=new_checkbox_values
 
         #store checkboxes        
-        store_from_organ_data['checkboxes']=checklist_organ_value
+        store_from_organ_data['checkboxes']=checklist_from_organ_value
 
-        return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+        return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_organ.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_from_organ.value'):
 
-        if (len(store_from_organ_data['checkboxes']) < len(checklist_organ_value)):
+        if (len(store_from_organ_data['checkboxes']) < len(checklist_from_organ_value)):
 
-            box_we_clicked=list(set(checklist_organ_value).difference(set(store_from_organ_data['checkboxes'])))[0]
+            box_we_clicked=list(set(checklist_from_organ_value).difference(set(store_from_organ_data['checkboxes'])))[0]
 
             #elements
-            for temp_node in cytoscape_organ_elements['nodes']:
+            for temp_node in cytoscape_from_organ_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_organ[box_we_clicked]:
                     temp_node['classes']='selected'  
 
@@ -651,16 +651,16 @@ def callback_aggregate(
             store_from_organ_data['organ']=list(set(store_from_organ_data['organ']).union(set(checklist_hashmap_organ[box_we_clicked])))
 
             #dropdown
-            dropdown_organ_value=store_from_organ_data['organ']
+            dropdown_from_organ_value=store_from_organ_data['organ']
             
-            return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+            return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
            
-        elif len(store_from_organ_data['checkboxes']) > len(checklist_organ_value):
+        elif len(store_from_organ_data['checkboxes']) > len(checklist_from_organ_value):
 
-            box_we_unclicked=list(set(store_from_organ_data['checkboxes']).difference(set(checklist_organ_value)))[0]
+            box_we_unclicked=list(set(store_from_organ_data['checkboxes']).difference(set(checklist_from_organ_value)))[0]
 
             #elements
-            for temp_node in cytoscape_organ_elements['nodes']:
+            for temp_node in cytoscape_from_organ_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_organ[box_we_unclicked]:
                     temp_node['classes']='not_selected' 
 
@@ -669,18 +669,18 @@ def callback_aggregate(
             store_from_organ_data['organ']=list(set(store_from_organ_data['organ']).difference(set(checklist_hashmap_organ[box_we_unclicked])))
 
             #dropdown
-            dropdown_organ_value=store_from_organ_data['organ']
+            dropdown_from_organ_value=store_from_organ_data['organ']
 
-            return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+            return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_organ.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_from_organ.value'):
 
-        if len(store_from_organ_data['organ']) < len(dropdown_organ_value):
+        if len(store_from_organ_data['organ']) < len(dropdown_from_organ_value):
 
-            organ_we_added=list(set(dropdown_organ_value).difference(set(store_from_organ_data['organ'])))[0]
+            organ_we_added=list(set(dropdown_from_organ_value).difference(set(store_from_organ_data['organ'])))[0]
 
             #elements
-            for temp_node in cytoscape_organ_elements['nodes']:
+            for temp_node in cytoscape_from_organ_elements['nodes']:
                 if temp_node['data']['id'] == organ_we_added:
                     temp_node['classes']='selected'  
                     break
@@ -701,18 +701,18 @@ def callback_aggregate(
                 #if the set of organ implied by temp_checkbox is in the store/elements
                 #then add the chceklist to the store/add the value to the checklist values
                 #we can check is the set of organ is there by doing a difference and if the difference length is zero
-                if len(set(checklist_hashmap_organ[temp_checkbox]).difference(set(dropdown_organ_value)))==0:
+                if len(set(checklist_hashmap_organ[temp_checkbox]).difference(set(dropdown_from_organ_value)))==0:
                     store_from_organ_data['checkboxes'].append(temp_checkbox)
-                    checklist_organ_value.append(temp_checkbox)
+                    checklist_from_organ_value.append(temp_checkbox)
 
-            return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+            return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
-        elif len(store_from_organ_data['organ']) > len(dropdown_organ_value):
+        elif len(store_from_organ_data['organ']) > len(dropdown_from_organ_value):
 
-            organ_we_lost=list(set(store_from_organ_data['organ']).difference(set(dropdown_organ_value)))[0]
+            organ_we_lost=list(set(store_from_organ_data['organ']).difference(set(dropdown_from_organ_value)))[0]
 
             #elements
-            for temp_node in cytoscape_organ_elements['nodes']:
+            for temp_node in cytoscape_from_organ_elements['nodes']:
                 if temp_node['data']['id'] == organ_we_lost:
                     temp_node['classes']='not_selected'  
                     break
@@ -738,51 +738,51 @@ def callback_aggregate(
                 except ValueError:
                     continue
                 try:
-                    checklist_organ_value.remove(temp_checkbox)
+                    checklist_from_organ_value.remove(temp_checkbox)
                 except ValueError:
                     continue
 
-            return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+            return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_organ.n_clicks'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_from_organ.n_clicks'):
 
         store_from_organ_data={
             'organ':[],
             'checkboxes':[]
         }
 
-        for temp_node in cytoscape_organ_elements['nodes']:
+        for temp_node in cytoscape_from_organ_elements['nodes']:
             temp_node['classes']='not_selected'  
 
-        checklist_organ_value=list()
+        checklist_from_organ_value=list()
 
-        dropdown_organ_value=None
+        dropdown_from_organ_value=None
 
-        return cytoscape_organ_elements, checklist_organ_value, dropdown_organ_value,store_from_organ_data
+        return cytoscape_from_organ_elements, checklist_from_organ_value, dropdown_from_organ_value,store_from_organ_data
 
 
 
 @app.callback(
-    [Output(component_id='cytoscape_disease',component_property='elements'),
-    Output(component_id='checklist_disease',component_property='value'),
-    Output(component_id='dropdown_disease',component_property='value'),
+    [Output(component_id='cytoscape_from_disease',component_property='elements'),
+    Output(component_id='checklist_from_disease',component_property='value'),
+    Output(component_id='dropdown_from_disease',component_property='value'),
     Output(component_id='store_from_disease',component_property='data')],
     
-    [Input(component_id='cytoscape_disease',component_property='tapNodeData'),
-    Input(component_id='checklist_disease',component_property='value'),
-    Input(component_id='dropdown_disease',component_property='value'),
-    Input(component_id='button_disease',component_property='n_clicks')],
+    [Input(component_id='cytoscape_from_disease',component_property='tapNodeData'),
+    Input(component_id='checklist_from_disease',component_property='value'),
+    Input(component_id='dropdown_from_disease',component_property='value'),
+    Input(component_id='button_from_disease',component_property='n_clicks')],
     
-    [State(component_id='cytoscape_disease',component_property='elements'),
+    [State(component_id='cytoscape_from_disease',component_property='elements'),
     State(component_id='store_from_disease',component_property='data')]
 )
 def callback_aggregate(
-    cytoscape_disease_tapnodedata,
-    checklist_disease_value,
-    dropdown_disease_value,
-    button_disease_value,
+    cytoscape_from_disease_tapnodedata,
+    checklist_from_disease_value,
+    dropdown_from_disease_value,
+    button_from_disease_value,
 
-    cytoscape_disease_elements,
+    cytoscape_from_disease_elements,
     store_from_disease_data
 ):
 
@@ -796,37 +796,37 @@ def callback_aggregate(
         #without this we get 
         #Cannot read properties of null (reading 'indexOf')
         #https://stackoverflow.com/questions/62183202/cannot-read-properly-data-of-null-dash
-        checklist_disease_value=list()
+        checklist_from_disease_value=list()
 
-        return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+        return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
     elif (len(callback_context.triggered)>1) and (store_from_disease_data is not None):
-        cytoscape_disease_elements, 
-        for temp_node in cytoscape_disease_elements['nodes']:
+        cytoscape_from_disease_elements, 
+        for temp_node in cytoscape_from_disease_elements['nodes']:
             if temp_node['data']['id'] in store_from_disease_data['disease']:
                 temp_node['classes']='selected'
             else:
                 temp_node['classes']='not_selected'
                       
-        dropdown_disease_value=store_from_disease_data['disease']
+        dropdown_from_disease_value=store_from_disease_data['disease']
 
-        checklist_disease_value=store_from_disease_data['checkboxes']
+        checklist_from_disease_value=store_from_disease_data['checkboxes']
 
         #dont do anthing to store_from_disease_data
 
-        return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+        return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_disease.tapNodeData'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='cytoscape_from_disease.tapNodeData'):
         
         #elements
         try:
-            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_disease,cytoscape_disease_tapnodedata['id'])
+            child_nodes_and_self=nx.algorithms.dag.descendants(networkx_disease,cytoscape_from_disease_tapnodedata['id'])
         except nx.NetworkXError:
             child_nodes_and_self=set()
-        child_nodes_and_self.add(cytoscape_disease_tapnodedata['id'])
+        child_nodes_and_self.add(cytoscape_from_disease_tapnodedata['id'])
         child_nodes_and_self=set(map(str,child_nodes_and_self))
         
-        for temp_node in cytoscape_disease_elements['nodes']:
+        for temp_node in cytoscape_from_disease_elements['nodes']:
             if temp_node['data']['id'] in child_nodes_and_self:
                 if temp_node['classes']=='selected':
                     temp_node['classes']='not_selected'
@@ -835,13 +835,13 @@ def callback_aggregate(
 
         #store disease
         new_disease_list=list()
-        for temp_node in cytoscape_disease_elements['nodes']:
+        for temp_node in cytoscape_from_disease_elements['nodes']:
             if temp_node['classes']=='selected':
                 new_disease_list.append(temp_node['data']['id'])        
         store_from_disease_data['disease']=new_disease_list
 
         #dropdown
-        dropdown_disease_value=store_from_disease_data['disease']
+        dropdown_from_disease_value=store_from_disease_data['disease']
 
         #checkbox
         new_checkbox_values=list()
@@ -849,21 +849,21 @@ def callback_aggregate(
             #if every node id is in the store
             if all([(i in store_from_disease_data['disease']) for i in checklist_hashmap_disease[temp_checkbox]]):
                 new_checkbox_values.append(temp_checkbox)
-        checklist_disease_value=new_checkbox_values
+        checklist_from_disease_value=new_checkbox_values
 
         #store checkboxes        
-        store_from_disease_data['checkboxes']=checklist_disease_value
+        store_from_disease_data['checkboxes']=checklist_from_disease_value
 
-        return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+        return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_disease.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='checklist_from_disease.value'):
 
-        if (len(store_from_disease_data['checkboxes']) < len(checklist_disease_value)):
+        if (len(store_from_disease_data['checkboxes']) < len(checklist_from_disease_value)):
 
-            box_we_clicked=list(set(checklist_disease_value).difference(set(store_from_disease_data['checkboxes'])))[0]
+            box_we_clicked=list(set(checklist_from_disease_value).difference(set(store_from_disease_data['checkboxes'])))[0]
 
             #elements
-            for temp_node in cytoscape_disease_elements['nodes']:
+            for temp_node in cytoscape_from_disease_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_disease[box_we_clicked]:
                     temp_node['classes']='selected'  
 
@@ -872,16 +872,16 @@ def callback_aggregate(
             store_from_disease_data['disease']=list(set(store_from_disease_data['disease']).union(set(checklist_hashmap_disease[box_we_clicked])))
 
             #dropdown
-            dropdown_disease_value=store_from_disease_data['disease']
+            dropdown_from_disease_value=store_from_disease_data['disease']
             
-            return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+            return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
            
-        elif len(store_from_disease_data['checkboxes']) > len(checklist_disease_value):
+        elif len(store_from_disease_data['checkboxes']) > len(checklist_from_disease_value):
 
-            box_we_unclicked=list(set(store_from_disease_data['checkboxes']).difference(set(checklist_disease_value)))[0]
+            box_we_unclicked=list(set(store_from_disease_data['checkboxes']).difference(set(checklist_from_disease_value)))[0]
 
             #elements
-            for temp_node in cytoscape_disease_elements['nodes']:
+            for temp_node in cytoscape_from_disease_elements['nodes']:
                 if temp_node['data']['id'] in checklist_hashmap_disease[box_we_unclicked]:
                     temp_node['classes']='not_selected' 
 
@@ -890,18 +890,18 @@ def callback_aggregate(
             store_from_disease_data['disease']=list(set(store_from_disease_data['disease']).difference(set(checklist_hashmap_disease[box_we_unclicked])))
 
             #dropdown
-            dropdown_disease_value=store_from_disease_data['disease']
+            dropdown_from_disease_value=store_from_disease_data['disease']
 
-            return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+            return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_disease.value'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='dropdown_from_disease.value'):
 
-        if len(store_from_disease_data['disease']) < len(dropdown_disease_value):
+        if len(store_from_disease_data['disease']) < len(dropdown_from_disease_value):
 
-            disease_we_added=list(set(dropdown_disease_value).difference(set(store_from_disease_data['disease'])))[0]
+            disease_we_added=list(set(dropdown_from_disease_value).difference(set(store_from_disease_data['disease'])))[0]
 
             #elements
-            for temp_node in cytoscape_disease_elements['nodes']:
+            for temp_node in cytoscape_from_disease_elements['nodes']:
                 if temp_node['data']['id'] == disease_we_added:
                     temp_node['classes']='selected'  
                     break
@@ -922,18 +922,18 @@ def callback_aggregate(
                 #if the set of disease implied by temp_checkbox is in the store/elements
                 #then add the chceklist to the store/add the value to the checklist values
                 #we can check is the set of disease is there by doing a difference and if the difference length is zero
-                if len(set(checklist_hashmap_disease[temp_checkbox]).difference(set(dropdown_disease_value)))==0:
+                if len(set(checklist_hashmap_disease[temp_checkbox]).difference(set(dropdown_from_disease_value)))==0:
                     store_from_disease_data['checkboxes'].append(temp_checkbox)
-                    checklist_disease_value.append(temp_checkbox)
+                    checklist_from_disease_value.append(temp_checkbox)
 
-            return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+            return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
-        elif len(store_from_disease_data['disease']) > len(dropdown_disease_value):
+        elif len(store_from_disease_data['disease']) > len(dropdown_from_disease_value):
 
-            disease_we_lost=list(set(store_from_disease_data['disease']).difference(set(dropdown_disease_value)))[0]
+            disease_we_lost=list(set(store_from_disease_data['disease']).difference(set(dropdown_from_disease_value)))[0]
 
             #elements
-            for temp_node in cytoscape_disease_elements['nodes']:
+            for temp_node in cytoscape_from_disease_elements['nodes']:
                 if temp_node['data']['id'] == disease_we_lost:
                     temp_node['classes']='not_selected'  
                     break
@@ -959,24 +959,24 @@ def callback_aggregate(
                 except ValueError:
                     continue
                 try:
-                    checklist_disease_value.remove(temp_checkbox)
+                    checklist_from_disease_value.remove(temp_checkbox)
                 except ValueError:
                     continue
 
-            return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+            return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
 
-    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_disease.n_clicks'):
+    elif (len(callback_context.triggered)==1) and (callback_context.triggered[0]['prop_id']=='button_from_disease.n_clicks'):
 
         store_from_disease_data={
             'disease':[],
             'checkboxes':[]
         }
 
-        for temp_node in cytoscape_disease_elements['nodes']:
+        for temp_node in cytoscape_from_disease_elements['nodes']:
             temp_node['classes']='not_selected'  
 
-        checklist_disease_value=list()
+        checklist_from_disease_value=list()
 
-        dropdown_disease_value=None
+        dropdown_from_disease_value=None
 
-        return cytoscape_disease_elements, checklist_disease_value, dropdown_disease_value,store_from_disease_data
+        return cytoscape_from_disease_elements, checklist_from_disease_value, dropdown_from_disease_value,store_from_disease_data
